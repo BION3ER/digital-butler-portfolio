@@ -3,7 +3,7 @@ import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 
 export default defineConfig({
-  output: 'hybrid', // Vercel автоматически обработает это как Serverless Functions
+  // В Astro 5 режим 'static' (по умолчанию) автоматически поддерживает API Routes на Vercel
   integrations: [
     tailwind(),
     react()
