@@ -1,44 +1,57 @@
 import { useRef, type FC } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { TorusKnot, OrbitControls } from '@react-three/drei';
+import { Torus, OrbitControls } from '@react-three/drei';
 import type { Mesh } from 'three';
 
-const AnimatedTorusKnot: FC = () => {
+interface AnimatedTorusProps {
+  color: string;
+  position: [number, number, number];
+  rotationSpeed: number;
+  rotationOffset?: [number, number, number];
+}
+
+const AnimatedTorus: FC<AnimatedTorusProps> = ({ 
+  color, 
+  position, 
+  rotationSpeed,
+  rotationOffset = [0, 0, 0]
+}) => {
   const meshRef = useRef<Mesh>(null);
-  
+
   useFrame((state): void => {
     if (!meshRef.current) return;
-    
+
     const time = state.clock.getElapsedTime();
-    
-    // Continuous rotation
-    meshRef.current.rotation.x = time * 0.2;
-    meshRef.current.rotation.y = time * 0.3;
-    
+
+    // Continuous rotation with individual speed
+    meshRef.current.rotation.x = time * rotationSpeed + rotationOffset[0];
+    meshRef.current.rotation.y = time * (rotationSpeed * 1.2) + rotationOffset[1];
+    meshRef.current.rotation.z = time * (rotationSpeed * 0.8) + rotationOffset[2];
+
     // Hover effect - subtle scaling based on mouse position
     const mouseX = state.pointer.x;
     const mouseY = state.pointer.y;
-    
+
     const baseScale = 1;
-    const hoverScale = baseScale + Math.abs(mouseX) * 0.1 + Math.abs(mouseY) * 0.1;
-    
+    const hoverScale = baseScale + Math.abs(mouseX) * 0.05 + Math.abs(mouseY) * 0.05;
+
     meshRef.current.scale.setScalar(hoverScale);
   });
 
   return (
-    <TorusKnot
+    <Torus
       ref={meshRef}
-      args={[1, 0.3, 128, 32]}
-      position={[0, 0, 0]}
+      args={[1.2, 0.12, 64, 100]}
+      position={position}
     >
       <meshStandardMaterial
-        color="#6366f1"
-        emissive="#4f46e5"
-        emissiveIntensity={0.5}
-        metalness={0.8}
-        roughness={0.2}
+        color={color}
+        emissive={color}
+        emissiveIntensity={0.6}
+        metalness={0.9}
+        roughness={0.1}
       />
-    </TorusKnot>
+    </Torus>
   );
 };
 
@@ -51,19 +64,39 @@ const ButlerModel: FC = () => {
         gl={{ antialias: true, alpha: true }}
       >
         {/* Lighting */}
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={1} color="#8b5cf6" />
-        <pointLight position={[-10, -10, -10]} intensity={0.5} color="#06b6d4" />
-        
-        {/* Main 3D object */}
-        <AnimatedTorusKnot />
-        
+        <ambientLight intensity={0.6} />
+        <pointLight position={[10, 10, 10]} intensity={1.2} color="#ffffff" />
+        <pointLight position={[-10, -10, -10]} intensity={0.8} color="#ffffff" />
+
+        {/* Three colored rings - Red, Blue, Green */}
+        {/* Red Ring - tilted on X axis */}
+        <AnimatedTorus 
+          color="#ef4444" 
+          position={[0, 0, 0]} 
+          rotationSpeed={0.3} 
+          rotationOffset={[Math.PI / 3, 0, 0]}
+        />
+        {/* Blue Ring - tilted on Y axis */}
+        <AnimatedTorus 
+          color="#3b82f6" 
+          position={[0, 0, 0]} 
+          rotationSpeed={0.4} 
+          rotationOffset={[0, Math.PI / 3, 0]}
+        />
+        {/* Green Ring - tilted on Z axis */}
+        <AnimatedTorus 
+          color="#22c55e" 
+          position={[0, 0, 0]} 
+          rotationSpeed={0.5} 
+          rotationOffset={[0, 0, Math.PI / 3]}
+        />
+
         {/* Camera controls */}
         <OrbitControls
           enableZoom={false}
           enablePan={false}
           autoRotate
-          autoRotateSpeed={0.5}
+          autoRotateSpeed={0.3}
           maxPolarAngle={Math.PI / 1.5}
           minPolarAngle={Math.PI / 3}
         />
