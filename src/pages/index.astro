@@ -1,0 +1,170 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ButlerModel from '../components/3d/ButlerModel.tsx';
+import ButlerChat from '../components/ai/ButlerChat.tsx';
+
+const services = [
+  {
+    title: 'Автоматизация',
+    description: 'Избавлю от рутинных задач. Настрою автоматические процессы, скрипты и пайплайны для экономии вашего времени.',
+    icon: '⚙️'
+  },
+  {
+    title: 'Внедрение ИИ',
+    description: 'Интегрирую нейросети в ваш бизнес. Чат-боты, аналитика, генерация контента — любые AI-решения под ключ.',
+    icon: '🤖'
+  },
+  {
+    title: 'Настройка серверов',
+    description: 'Разверну и настрою серверную инфраструктуру. Docker, Kubernetes, CI/CD — надёжно и безопасно.',
+    icon: '🖥️'
+  }
+];
+---
+
+<Layout>
+  <!-- Hero Section -->
+  <section class="min-h-screen flex items-center justify-center px-4 py-20">
+    <div class="max-w-7xl mx-auto w-full">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <!-- Left: Text content -->
+        <div class="space-y-8 order-2 md:order-1">
+          <div class="inline-flex items-center gap-2 px-4 py-2 bg-slate-800/50 rounded-full border border-slate-700">
+            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+            <span class="text-sm text-slate-300">Доступен для консультаций</span>
+          </div>
+          
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+            Забудьте о головной боли в IT.
+            <span class="block bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+              Навсегда
+            </span>
+          </h1>
+          
+          <p class="text-lg text-slate-400 max-w-xl">
+            Ваш персональный цифровой батлер для решения любых технических задач. 
+            От настройки серверов до внедрения искусственного интеллекта.
+          </p>
+          
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button
+              onclick="document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })"
+              class="px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-primary/25 hover:scale-105 transition-all duration-300"
+            >
+              Начать диалог
+            </button>
+            <a
+              href="https://t.me/batler"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-8 py-4 bg-slate-800 text-white font-semibold rounded-lg border border-slate-700 hover:bg-slate-700 transition-all duration-300 text-center"
+            >
+              Telegram
+            </a>
+          </div>
+          
+          <div class="flex items-center gap-6 pt-4">
+            <div class="flex -space-x-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-secondary border-2 border-slate-950"></div>
+              <div class="w-10 h-10 rounded-full bg-gradient-to-r from-secondary to-accent border-2 border-slate-950"></div>
+              <div class="w-10 h-10 rounded-full bg-gradient-to-r from-accent to-primary border-2 border-slate-950"></div>
+            </div>
+            <div>
+              <p class="font-semibold text-white">50+ проектов</p>
+              <p class="text-sm text-slate-400">Успешно реализовано</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right: 3D Model -->
+        <div class="order-1 md:order-2 h-[400px] md:h-[600px]">
+          <ButlerModel client:load />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="py-20 px-4 bg-slate-900/50">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+          Услуги цифрового батлера
+        </h2>
+        <p class="text-slate-400 max-w-2xl mx-auto">
+          Полный спектр IT-услуг для вашего бизнеса и личных проектов
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        {services.map((service, index) => (
+          <div
+            class="group p-8 bg-slate-800/50 rounded-2xl border border-slate-700 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-2"
+            style={`animation-delay: ${index * 150}ms`}
+          >
+            <div class="text-5xl mb-6">{service.icon}</div>
+            <h3 class="text-xl font-semibold mb-3 text-white">{service.title}</h3>
+            <p class="text-slate-400 leading-relaxed">{service.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">
+        Готовы избавиться от IT-головной боли?
+      </h2>
+      <p class="text-slate-400 mb-8 max-w-2xl mx-auto">
+        Свяжитесь со мной прямо сейчас через чат или мессенджеры. 
+        Первая консультация — бесплатно.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button
+          onclick="window.dispatchEvent(new CustomEvent('open-chat'))"
+          class="px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-primary/25 hover:scale-105 transition-all duration-300"
+        >
+          Открыть чат
+        </button>
+        <a
+          href="mailto:butler@example.com"
+          class="px-8 py-4 bg-slate-800 text-white font-semibold rounded-lg border border-slate-700 hover:bg-slate-700 transition-all duration-300"
+        >
+          butler@example.com
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 px-4 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-slate-500 text-sm">
+        © {new Date().getFullYear()} Digital Butler. Все права защищены.
+      </p>
+      <div class="flex gap-6">
+        <a href="https://t.me/batler" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-primary transition-colors">
+          Telegram
+        </a>
+        <a href="mailto:butler@example.com" class="text-slate-400 hover:text-primary transition-colors">
+          Email
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chat Component -->
+  <ButlerChat client:idle />
+
+  <script>
+    // Open chat on custom event
+    window.addEventListener('open-chat', () => {
+      const chatButton = document.querySelector('button[aria-label="Открыть чат с батлером"]');
+      if (chatButton) {
+        (chatButton as HTMLElement).click();
+      }
+    });
+  </script>
+</Layout>

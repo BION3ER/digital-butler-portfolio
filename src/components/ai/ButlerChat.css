@@ -1,0 +1,34 @@
+/* ButlerChat component styles */
+
+/* Custom scrollbar for chat messages */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #1e293b;
+  border-radius: 3px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 3px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Animation for typing indicator */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
