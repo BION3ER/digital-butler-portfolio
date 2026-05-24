@@ -1,13 +1,9 @@
 import { defineConfig } from 'astro/config';
-import node from '@astrojs/node';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 
 export default defineConfig({
-  output: 'hybrid',
-  adapter: node({
-    mode: 'standalone'
-  }),
+  output: 'hybrid', // Vercel автоматически обработает это как Serverless Functions
   integrations: [
     tailwind(),
     react()
@@ -15,6 +11,9 @@ export default defineConfig({
   vite: {
     optimizeDeps: {
       include: ['three']
+    },
+    ssr: {
+      noExternal: ['three'] // Важно для корректной работы Three.js в SSR
     }
   }
 });
